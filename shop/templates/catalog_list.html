@@ -8,11 +8,11 @@
 {% block content %}
 <table>
 <tr>
-<th>Название</th><th>Цена</th>
+<th>Регион продаж</th><th>Бренд</th><th>Название</th><th>Цена</th><th>Удален</th>
 </tr>
 {% for object in object_list %}
 <tr>
-<td>{{ object.brand }}</td><td>{{ object.title }}</td><td>{{ object.price }}</td>
+<td>{{ object.site.name }}</td><td>{{ object.brand }}</td><td>{{ object.title }}</td><td>{{ object.price }}</td><td>{{ object.deleted }}</td>
 </tr>
 {% endfor %}
 </table>
