@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% include 'menu.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Категории товаров</title>
+</head>
+{% block content %}
+<table>
+
+{% for object in object_list %}
+<tr>
+<td>{{ object.brand }}</td><td>{{ object.title }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
