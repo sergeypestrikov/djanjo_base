@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13.7
+    privileged: true
+    restart: always
+    ports:
+      - 54325:5432
+    environment:
+      POSTGRES_DB: catalog
+      POSTGRES_USER: sam
+      POSTGRES_PASSWORD: 220883
+      PGDATA: '/var/cat/postgresql/data/pgdata'
+    volumes:
+      - .:/var/cat/postgresql/data
+
+  backend:
+    build:
+      context: ./shop
+    privileged: true
+    restart: always
+    expose:
+      - 8000
+    command: bash -c "
+      python manage.py migrate &&
+      gunicorn shop.wsgi -b 0.0.0.0:8000
+      "
+    environment:
+      DJANGO_SETTINGS_MODULE: shop.settings
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 8002:8002
+    depends_on:
+      - backend
